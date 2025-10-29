@@ -1,0 +1,26 @@
+class Solution {
+
+    void solve(int ind, int n, StringBuilder sb, String s, Set<String> st){
+
+        if(ind >= n){
+            st.add(sb.toString());
+            return;
+        }
+
+        st.add(sb.toString());
+
+        for(int i = ind ; i < n ; i++){
+            sb.append(s.charAt(i));
+            solve(i+1, n, sb, s, st);
+            sb.deleteCharAt(sb.length()-1);
+        }
+    }
+
+    int distinctSubsequences(String s) {
+        // code here
+        Set<String> st = new HashSet<>();
+        solve(0, s.length(), new StringBuilder(), s, st);
+        return st.size();
+    }
+
+}
