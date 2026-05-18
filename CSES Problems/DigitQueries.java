@@ -1,6 +1,9 @@
 import java.io.*;
+import java.util.*;
 
-public class WeirdAlgo {
+public class DigitQueries {
+    public static BufferedWriter out = new BufferedWriter(new OutputStreamWriter(System.out));
+
 
     static class FastScanner {
         private final InputStream is = System.in;
@@ -33,6 +36,22 @@ public class WeirdAlgo {
             return hasNextByte();
         }
 
+        public String next() {
+            if (!hasNext()) throw new java.util.NoSuchElementException();
+            StringBuilder sb = new StringBuilder();
+            byte b = readByte();
+            while (isPrintableChar(b)) {
+                sb.append((char) b);
+                b = readByte();
+            }
+            return sb.toString();
+        }
+
+        public char nextChar() {
+            if (!hasNext()) throw new java.util.NoSuchElementException();
+            return (char) readByte();
+        }
+
         public long nextLong() {
             if (!hasNext()) throw new java.util.NoSuchElementException();
             long n = 0;
@@ -54,21 +73,36 @@ public class WeirdAlgo {
         }
     }
 
+
     public static void main(String[] args) throws IOException {
         FastScanner sc = new FastScanner();
+       	long t = sc.nextLong();
+        while (t-- > 0) {
+            long k = sc.nextLong();
+            long len = 1;
+            long count = 9;
+            long digit_in_blocks = count * len;
 
-        long n = sc.nextLong();
-        StringBuilder sb = new StringBuilder();
+            while (k > digit_in_blocks) {
+                k -= digit_in_blocks;
+                len++;
+                count *= 10;
+                digit_in_blocks = count * len;
+            }
 
-        while (true) {
-            sb.append(n).append(" ");
-            if (n == 1) break;
-            n = (n % 2 == 0) ? n / 2 : n * 3 + 1;
+            long num_index = (k - 1) / len;
+            int digit_index = (int) ((k - 1) % len);
+
+            long start = (long) Math.pow(10, len - 1);
+            long num = start + num_index;
+
+            String s = Long.toString(num);
+            out.write(s.charAt(digit_index));
+            out.newLine();
         }
 
-        // ✅ Use BufferedWriter instead of System.out.print()
-        BufferedWriter out = new BufferedWriter(new OutputStreamWriter(System.out));
-        out.write(sb.toString());
+        
         out.flush();
     }
 }
+

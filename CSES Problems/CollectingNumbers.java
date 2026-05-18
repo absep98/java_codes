@@ -1,8 +1,10 @@
+
 import java.io.*;
 import java.util.*;
 
-public class ButStrings {
-	public static final long MOD = 1000000007;
+public class CollectingNumbers {
+    public static BufferedWriter out = new BufferedWriter(new OutputStreamWriter(System.out));
+
 
     static class FastScanner {
         private final InputStream is = System.in;
@@ -71,44 +73,54 @@ public class ButStrings {
             return (int) nextLong();
         }
     }
-    public static long power(int a, int n){
-        long res = 1;
-        long base = a%MOD;
-        while(n > 0){
-            if((n&1) == 1){
-                res = (res * base)%MOD;
-            }
-            base = (base * base)%MOD;
-            n >>= 1;
-        }
-        return res;
-    }
+
+
     public static void main(String[] args) throws IOException {
         FastScanner sc = new FastScanner();
-        BufferedWriter out = new BufferedWriter(new OutputStreamWriter(System.out));
-        
-        int n = sc.nextInt();
-        long ans = power(2, n);
-        out.write(ans + "");
-        // out.newLine(); // optional: separates even and odd output
+       	int n = sc.nextInt();
+        List<Integer> list = new ArrayList<>();
+        for(int i = 0 ; i < n ; i++){
+            int a = sc.nextInt();
+            list.add(a);
+        }
+        int pos[] = new int[n+1];
+        int count = 1;
+        for(int i = 0 ; i < n ; i++){
+        	pos[list.get(i)] = i;
+        }
+
+        for(int i = 1 ; i < n ; i++){
+        	if(pos[i] > pos[i+1]){
+        		count++;
+        	}
+        }
+        out.write(count + "");
         out.flush();
+        return;
     }
 }
 
+/*
 
-/*Your task is to calculate the number of bit strings of length n.
-For example, if n=3, the correct answer is 8, because the possible bit strings are 000, 001, 010, 011, 100, 101, 110, and 111.
+You are given an array that contains each number between 1 \dots n exactly once. Your task is to collect the numbers from 1 to n in increasing order.
+On each round, you go through the array from left to right and collect as many numbers as possible. What will be the total number of rounds?
 Input
-The only input line has an integer n.
+The first line has an integer n: the array size.
+The next line has n integers x_1,x_2,\dots,x_n: the numbers in the array.
 Output
-Print the result modulo 10^9+7.
+Print one integer: the number of rounds.
 Constraints
 
-1 \le n \le 10^6
+1 \le n \le 2 \cdot 10^5
 
 Example
 Input:
-3
+5
+4 2 1 5 3
 
 Output:
-8*/
+3
+    
+
+*/
+

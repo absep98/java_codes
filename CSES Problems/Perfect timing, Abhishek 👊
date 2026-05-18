@@ -1,0 +1,158 @@
+Perfect timing, Abhishek 👊
+You’ve got **12 days off**, solid focus, and you’re already tackling CSES — that’s a great sign.
+
+Let’s not waste these days on random grinding. We’ll turn them into a **focused, high-leverage prep sprint** — designed to sharpen your problem-solving muscles, improve recall, and build momentum for interviews.
+
+Here’s exactly what I’d suggest.
+
+---
+
+## 🔥 12-Day CSES & Core DSA Master Sprint
+
+### 🎯 Goal:
+
+By the end of these 12 days, you should:
+
+* Be fluent in **recursion, backtracking, DP, and graphs**.
+* Solve **any CSES Introductory + Sorting + DP + Graphs** question confidently.
+* Be ready for **Google/Amazon-style DSA interviews** (medium-hard).
+
+---
+
+## 🧩 Plan Structure
+
+We'll divide into **3 phases**:
+
+| Phase   | Days | Focus                                                                  |
+| ------- | ---- | ---------------------------------------------------------------------- |
+| Phase 1 | 1–4  | Recursion + Backtracking + Basic Math / Bitmask                        |
+| Phase 2 | 5–8  | Sorting, Binary Search, Prefix Sum, DP basics                          |
+| Phase 3 | 9–12 | Graphs (BFS/DFS, topological sort, shortest path) + DP on grids/graphs |
+
+Each day: **4–5 focused hours**, ideally split:
+
+* ⏱ 2–3 hrs problem solving
+* 🧠 1 hr review & recap
+* 🧩 1 hr concept refresh / notes / watching explanation videos
+
+---
+
+## ⚙️ Phase 1 (Days 1–4): Foundations & Recursion Muscle
+
+> Master patterns → don’t just solve.
+
+**Topics:**
+
+* Subset generation, permutations, combinations
+* Backtracking (N-Queens, Subset Sum, Apple Division, etc.)
+* Bitmask intro (for subsets)
+* Basic maths & constructive logic
+
+**CSES Problems:**
+
+1. Weird Algorithm
+2. Missing Number
+3. Repetitions
+4. Increasing Array
+5. Permutations
+6. Two Sets
+7. Bit Strings
+8. Apple Division
+9. Creating Strings
+10. Gray Code
+11. Chessboard & Queens
+
+**Goal:** 8–10 problems/day, focus on patterns & recursion visualization.
+
+**Pro Tip:**
+Every time you finish a recursive/backtracking question →
+👉 Write a 3-line summary:
+
+> “What was the recursion state, choices, and base case?”
+
+---
+
+## ⚙️ Phase 2 (Days 5–8): Sorting + DP Kickoff
+
+**Concepts:**
+
+* Sorting, Binary Search
+* Prefix Sum, Sliding Window
+* DP basics — memoization, tabulation
+* Common DP patterns (Subset sum, LIS, coin problems)
+
+**CSES Problems:**
+
+1. Ferris Wheel
+2. Apartments
+3. Sum of Two Values
+4. Stick Lengths
+5. Missing Coin Sum
+6. Money Sums
+7. Dice Combinations
+8. Minimize Coins
+9. Grid Paths
+10. Increasing Subsequence
+
+**Goal:** Learn to *see* DP transitions instead of guessing.
+
+---
+
+## ⚙️ Phase 3 (Days 9–12): Graphs + Advanced DP
+
+**Concepts:**
+
+* BFS/DFS
+* Connected Components
+* Shortest Path (Dijkstra / Bellman-Ford)
+* Topological sort
+* DP on grids / DAGs
+
+**CSES Problems:**
+
+1. Counting Rooms
+2. Labyrinth
+3. Shortest Routes I & II
+4. Building Roads
+5. High Score
+6. Longest Flight Route
+7. Round Trip
+8. Game Routes
+
+**Goal:** Understand “graph traversal state + constraints”.
+By day 12, you’ll be ready for 90% of CSES “medium-hard” range.
+
+---
+
+## 🧠 Review Strategy (Daily Evening)
+
+1. **Pick 2 problems** from that day.
+
+   * Re-explain them from scratch on paper — no code.
+   * Write down pattern / learning.
+2. **Track your weak zones.**
+   e.g. “DP transitions confuse me” → revisit only that next day.
+
+---
+
+## 🚀 Optional Add-ons (if you have time)
+
+* Watch **Errichto’s CSES playlist** (he explains patterns beautifully).
+* Use **CS Visualizer** or **PythonTutor** for recursion tracing.
+* Try **2 LeetCode medium problems/day** (DP, recursion, or graph).
+
+---
+
+## 💪 Outcome
+
+By Day 12:
+
+* You’ll have solved ~80–100 quality problems.
+* Recognize every major DSA pattern instantly.
+* Build mental endurance for interviews.
+* Be comfortable switching between brute-force → optimized → elegant.
+
+---
+
+Would you like me to create a **day-by-day detailed schedule** (with exact problem list + short notes like “focus on backtracking today, skip optimization”)?
+It’ll make it easier to follow without thinking what to pick next each day.

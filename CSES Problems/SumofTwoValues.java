@@ -1,8 +1,11 @@
+
+
 import java.io.*;
 import java.util.*;
 
-public class Pract {
-	public static final long MOD = 1000000007;
+public class SumofTwoValues {
+    public static BufferedWriter out = new BufferedWriter(new OutputStreamWriter(System.out));
+
 
     static class FastScanner {
         private final InputStream is = System.in;
@@ -72,63 +75,52 @@ public class Pract {
         }
     }
 
-    public static long digits(int n){
-        int count = 0;
-        while(n != 0){
-            int cur = n%10;
-            count += cur;
-            n /= 10;
-        }
-        return count;
-    }
 
-    public static long solve(int n){
-        long sum = 0;
-        long p = 1;
-        while(p <= n){
-            long fullblock = n/(p*10);
-            sum += fullblock*45*p;
-            long remainder = n%(p*10);
-            long current = remainder/p;
-            long lower = remainder%p;
-
-            sum += (current * (current-1)/2) * p;
-            sum += current * (lower + 1);
-
-            p *= 10;
-        }
-        return sum;
-    }
     public static void main(String[] args) throws IOException {
         FastScanner sc = new FastScanner();
-        BufferedWriter out = new BufferedWriter(new OutputStreamWriter(System.out));
+       	int n = sc.nextInt();
+       	int target = sc.nextInt();
+        List<Integer> list = new ArrayList<>();
+        for(int i = 0 ; i < n ; i++){
+            int a = sc.nextInt();
+            list.add(a);
+        }
         
-        int n = sc.nextInt();
-        long ans = solve(n);
-        out.write(ans + "");
-        // out.newLine(); // optional: separates even and odd output
+        Map<Integer, Integer> mp = new HashMap<>();
+        long sum = 0;
+      	for(int i = 0 ; i < n ; i++){
+      		if(mp.containsKey(target-list.get(i))){
+      			out.write(mp.get(target-list.get(i)) + 1 + " " + (i+1);
+      			out.flush();
+      			return;
+      		}
+      		mp.put(list.get(i), i);
+      	}
+      	out.write("IMPOSSIBLE");
         out.flush();
+        return;
     }
 }
 
-// Given an integer n, find the sum of digits of all numbers from 1 to n.
+/*
 
-// Example:
-// Input: n = 15
-// Output: 66
-// (1+2+3+…+9 + (1+0)+(1+1)+…+(1+5))
+You are given an array of n integers, and your task is to find two values (at distinct positions) whose sum is x.
+Input
+The first input line has two integers n and x: the array size and the target sum.
+The second line has n integers a_1,a_2,\dots,a_n: the array values.
+Output
+Print two integers: the positions of the values. If there are several solutions, you may print any of them. If there are no solutions, print IMPOSSIBLE.
+Constraints
 
-// Why this problem:
-// It looks like an easy loop, but the optimal version uses pattern-based digit counting (recursion or place-value observation).
-// It teaches you to see repetitive patterns instead of iterating.
+1 \le n \le 2 \cdot 10^5
+1 \le x,a_i \le 10^9
 
-// Skills built:
+Example
+Input:
+4 8
+2 7 5 1
 
-// Pattern decomposition
+Output:
+2 4
+*/
 
-// Recursive thinking
-
-// Recognizing O(log₁₀ n) optimizations
-
-// Hint to think:
-// How many times does each digit (0–9) appear in each position (ones, tens, hundreds…)?
