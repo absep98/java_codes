@@ -401,6 +401,61 @@ public class CsesIntroductory {
         }
         return;
     }
+
+    public static void raabGame(int n, int a, int b) throws IOException{
+        if((a + b > n) || (a + b > 0 && (a == 0 || b == 0))){
+            out.write("NO\n");
+            return;
+        }
+        out.write("YES\n");
+        int idx = 0;
+        int tiedGames = n - a - b;
+        int gamesPlayed = n - tiedGames;
+        int gamesNumber[] = new int[gamesPlayed];
+        for(int i = tiedGames+1 ; i <= n ; i++){
+            gamesNumber[idx++] = i;
+        }
+        for(int i = 1 ; i <= tiedGames ; i++){
+            out.write(i + " ");
+        }
+        for(int i = 0 ; i < gamesPlayed ; i++){
+            out.write(gamesNumber[i] + " ");
+        }
+        out.write("\n");
+        for (int i = 1; i <= tiedGames; i++) {
+            out.write(i + " ");
+        }
+        for(int i = 0 ; i < gamesPlayed ; i++){
+            out.write(gamesNumber[(i+a)%gamesPlayed] + " ");
+        }
+        out.write("\n");
+        return;
+    }
+
+    public static void digitQuery(long k) throws IOException {
+        long digitCountPerNum = 1;
+        long totalNumInBuck = 9;
+        long startNum = 1;
+        while(k > totalNumInBuck * digitCountPerNum) {
+            k -= totalNumInBuck * digitCountPerNum;
+            digitCountPerNum += 1;
+            totalNumInBuck *= 10;
+            startNum *= 10;
+        }
+
+        long targetNum = startNum + (k - 1) / digitCountPerNum;
+        long digitIdx = (k - 1) % digitCountPerNum;
+        String str = String.valueOf(targetNum);
+        out.write(str.charAt((int)digitIdx) + "\n");
+        // OR
+        // long shiftsNeeded = digitCountPerNum - 1 - digitIdx;
+        // for (int i = 0; i < shiftsNeeded; i++) {
+        //     targetNum /= 10;
+        // }
+        // long answerDigit = targetNum % 10;
+        // out.write(answerDigit + "\n");
+    }
+
     public static void main(String[] args) throws IOException {
         FastScanner sc = new FastScanner();
         // int n = sc.nextInt();
@@ -448,7 +503,7 @@ public class CsesIntroductory {
 
         // String s = sc.next();
         // stringReorder(s);
-        int n = sc.nextInt();
+        int t = sc.nextInt();
         // int m = sc.nextInt();
 
         // char board[][] = new char[n][m];
@@ -462,7 +517,14 @@ public class CsesIntroductory {
 
         // GridColor(0, 0, n, m, board);
 
-        mexGridConst(n);
+        // mexGridConst(n);
+
+        for(int i = 0 ; i < t ; i++){
+            long n = sc.nextLong();
+            
+            digitQuery(n);
+        }
+
         // out.write(count + "");
         // for(char cur[] : board){
         //     for(char x : cur){
