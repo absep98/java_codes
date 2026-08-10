@@ -52,6 +52,16 @@ class Room {
     }
 }
 
+class Range{
+    int start;
+    int end;
+    int orgIndx;
+    public Range(int _s, int _e, int _o){
+        this.start = _s;
+        this.end = _e;
+        this.orgIndx = _o;
+    }
+}
 public class SortingandSearching {
 
     public static BufferedWriter out = new BufferedWriter(new OutputStreamWriter(System.out));
@@ -753,18 +763,181 @@ public class SortingandSearching {
         return;
     }
 
+    public static void DistinctValuesSubarrays(int n, int arr[]) throws IOException{
+        Map<Integer, Integer> mp = new HashMap<>();
+        int i = 0;
+        int j = 0;
+        long count = 0;
+        while(j < n){
+            mp.put(arr[j], mp.getOrDefault(arr[j], 0) + 1);
+            while(mp.get(arr[j]) > 1){
+                mp.put(arr[i], mp.get(arr[i]) - 1);
+                if(mp.get(arr[i]) == 0){
+                    mp.remove(arr[i]);
+                }
+                i++;
+            }
+            count += (j-i+1);
+            j++;
+        }
+        out.write(String.valueOf(count));
+        return;
+    }
+
+    public static void DistinctValuesSubarraysII(int n, int k, int arr[]) throws IOException{
+        Map<Integer, Integer> mp = new HashMap<>();
+        int i = 0;
+        int j = 0;
+        long count = 0;
+        while(j < n){
+            mp.put(arr[j], mp.getOrDefault(arr[j], 0) + 1);
+            while(mp.size() > k){
+                mp.put(arr[i], mp.get(arr[i]) - 1);
+                if(mp.get(arr[i]) == 0){
+                    mp.remove(arr[i]);
+                }
+                i++;
+            }
+            count += (j-i+1);
+            j++;
+        }
+        out.write(String.valueOf(count));
+        return;
+    }
+
+    public static void TrafficLights(int len, int n, int arr[]) throws IOException{
+        // setup poistion tracker (the boundaries of the street)
+        TreeSet<Integer> poistions = new TreeSet<>();
+        poistions.add(0);
+        poistions.add(len);
+        // setup length tracker 
+        TreeMap<Integer, Integer> lengths = new TreeMap<>();
+        lengths.put(len, 1);  // as initially we have only 1 length 
+
+        StringBuilder sb = new StringBuilder();
+        for(int p : arr){
+            int lower = poistions.lower(p);
+            int higher = poistions.higher(p);
+            // action 1 : destroy old piece
+            int oldLength = higher - lower;
+            int oldLengthCount = lengths.get(oldLength);
+            if(oldLengthCount == 1){
+                lengths.remove(oldLength);
+            } else {
+                lengths.put(oldLength, oldLengthCount - 1);
+            }
+
+            // action 2 : create 2 new pieces
+            int leftLength = p - lower;
+            int rightLength = higher - p;
+
+            lengths.put(leftLength, lengths.getOrDefault(leftLength, 0) + 1);
+            lengths.put(rightLength, lengths.getOrDefault(rightLength, 0) + 1);
+           
+
+            // action3 : save the new cut and grab max length
+            poistions.add(p);
+
+            // largeest key 
+            sb.append(lengths.lastKey()).append(" ");
+        }
+        out.write(sb.toString());
+        return;
+    }
+    
+    public static void JosephusProblemI(int n) throws IOException{
+        Queue<Integer> q = new LinkedList<>();
+
+        for(int i = 1 ; i <= n ; i++){
+            q.add(i);
+        }
+        while(!q.isEmpty()){
+            int first = q.poll();
+            Integer second = q.poll();
+            if(second == null){
+                out.write(String.valueOf(first));
+            } else {
+                out.write(String.valueOf(second) + " ");
+                q.add(first);
+            }
+           
+        }
+        return;
+    }
+
+    public static void DistinctValuesSubsequences(int n, int arr[]) throws IOException{
+        Map<Integer, Integer> mp = new HashMap<>();
+        long mod = 1000000007; // 10^9 + 7
+        for(int x : arr){
+            mp.put(x, mp.getOrDefault(x, 0)  + 1);
+        }
+
+        long totalChc = 1;
+        for(Map.Entry<Integer, Integer> entry : mp.entrySet()){
+            long fq = entry.getValue();
+            totalChc = (totalChc * (fq+1))%mod;
+        }
+        out.write(String.valueOf((totalChc - 1 + mod)%mod));
+        return;
+    }
+
+    public static void NestedRangesCheck(int n, Range ranges[]) throws IOException{
+        int[] contains = new int[n];
+        int[] isContained = new int[n];
+        int maxend = 0;
+        for(int i = 0 ; i < n ; i++){
+            int curend = ranges[i].end;
+            if(curend <= maxend){
+                isContained[ranges[i].orgIndx] = 1;
+            }
+            maxend = Math.max(maxend, curend);
+        }
+        int minend = Integer.MAX_VALUE;
+        for(int i = n-1 ; i >= 0 ; i--){
+            int curend = ranges[i].end;
+            if(curend >=  minend){
+                contains[ranges[i].orgIndx] = 1;
+            }
+            minend = Math.min(minend, curend);
+        }
+        StringBuilder sb1 = new StringBuilder();
+        StringBuilder sb2 = new StringBuilder();
+        for (int i = 0; i < n; i++) {
+            sb1.append(contains[i]).append(" ");
+            sb2.append(isContained[i]).append(" ");
+        }
+        
+        out.write(sb1.toString().trim() + "\n");
+        out.write(sb2.toString().trim());
+        return;
+    }
+
+    public static void NestedRangesCount(int n, Range ranges[]) throws IOException {
+        
+    }
+
     public static void main(String args[]) throws IOException{
         
         FastScanner sc = new FastScanner();
 
+        
+        // int t = sc.nextInt();
         int n = sc.nextInt();
-        int t = sc.nextInt();
-        int arr[] = new int[n];
-
+        // int arr[] = new int[n];
+        Range[] ranges = new Range[n];
         for(int i = 0 ; i < n ; i++){
-            arr[i] = sc.nextInt();
+            int x = sc.nextInt();
+            int y = sc.nextInt();
+
+            ranges[i] = new Range(x, y, i);
         }
        
+        Arrays.sort(ranges, (a, b) -> {
+            if(a.start != b.start){
+                return Integer.compare(a.start, b.start);
+            }
+            return Integer.compare(b.end, a.end);
+        });
         // DistinctNumbers(n, arr);
         // Apartments(n, m, k, desires, aptsz);
         // FerrisWheel(n, x, wts);
@@ -782,17 +955,26 @@ public class SortingandSearching {
         // SubarraySumsII(n, x, arr);
         // SubarrayDivisibility(n, arr);
         // RoomAllocation(n, customers);
-
+        // TrafficLights(t, n, arr);
         // FactoryMachines(n, t, arr);
         // ArrayDivision(n, t,  arr);
-
         // SumofThreeValues(n, t, arr);
-        SumofFourValues(n, t, arr);
-
-
+        // SumofFourValues(n, t, arr);
+        // DistinctValuesSubarrays(n, arr);
+        // DistinctValuesSubarraysII(n, t, arr);
         // TasksandDeadlines(n, pq);
         // Playlist(n, arr);
         // Towers(n, arr);
+
+
+        // NestedRangesCheck(n, ranges);
+        NestedRangesCount(n, ranges);
+
+        // JosephusProblemI(n);
+
+        // DistinctValuesSubsequences(n, arr);
+
+
         out.flush();
     }
 }
