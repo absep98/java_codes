@@ -1205,7 +1205,150 @@ public class GraphAlgorithms {
     }
 
     public static void GameRoutes() throws IOException {
+        int n = sc.nextInt();
+        int m = sc.nextInt();
+
+        ArrayList<ArrayList<Integer>> adj = new ArrayList<>();
+        for(int i = 0 ; i < n+1 ; i++){
+            adj.add(new ArrayList<>());
+        }
+        for(int i = 1 ; i <= m ; i++){
+            int a = sc.nextInt();
+            int b = sc.nextInt();
+            adj.get(a).add(b);
+        }
+        int indg[] = new int[n+1];
+        Queue<Integer> q = new LinkedList<>();
+        for(int i = 1 ; i <= n ; i++) {
+            for(int ngh : adj.get(i)) {
+                indg[ngh]++;
+            }
+        }
+        for(int i = 1 ; i <= n ; i++) {
+            if(indg[i] == 0) {
+                q.add(i);
+            }
+        }
+        int dp[] = new int[n+1];
+        dp[1] = 1;
+        while(!q.isEmpty()) {
+            int curNode = q.poll();
+            for(int ngh : adj.get(curNode)) {
+                dp[ngh] = (dp[ngh] + dp[curNode])%1_000_000_007;
+                indg[ngh]--;
+                if(indg[ngh] == 0) {
+                    q.add(ngh);
+                }
+            }
+        }
+        out.write(dp[n] + "");
+        return;
+    }
+
+    public static void Investigation() throws IOException {
+        int n = sc.nextInt();
+        int m = sc.nextInt();
+        ArrayList<ArrayList<Edge>> adj = new ArrayList<>();
+        for(int i = 0 ; i < n+1 ; i++) {
+            adj.add(new ArrayList<>());
+        }
+        for(int i = 1 ; i <= m ; i++){
+            int a = sc.nextInt();
+            int b = sc.nextInt();
+            long c = sc.nextLong();
+            adj.get(a).add(new Edge(b, c));
+        }
+        PriorityQueue<State> pq = new PriorityQueue<>(Comparator.comparingLong(s -> s.distance));
+        pq.add(new State(1, 0L));
+        long dist[] = new long[n+1];
+        Arrays.fill(dist, Long.MAX_VALUE);
+        dist[1] = 0L;
+        long ways[] = new long[n+1];
+        ways[1] = 1L;
+        int minFlights[] = new int[n+1];
+        int maxFlights[] = new int[n+1];
+        Arrays.fill(minFlights, Integer.MAX_VALUE);
+        Arrays.fill(maxFlights, Integer.MIN_VALUE);
+        maxFlights[1] = 0;
+        minFlights[1] = 0;
+        while(!pq.isEmpty()) {
+            State curState = pq.poll();
+            int curNode = curState.node;
+            long curDist = curState.distance;
+            if(curDist != dist[curNode]) {
+                continue;
+            }
+            for(Edge edge : adj.get(curNode)) {
+                long newDist = dist[curNode] + edge.weight;
+                if(newDist < dist[edge.to]) {
+                    dist[edge.to] = newDist;
+                    ways[edge.to] = ways[curNode];
+                    minFlights[edge.to] = minFlights[curNode] + 1;
+                    maxFlights[edge.to] = maxFlights[curNode] + 1;
+                    pq.add(new State(edge.to, newDist));
+
+                } else if(newDist == dist[edge.to]) {
+                    ways[edge.to] = (ways[edge.to] + ways[curNode])%1_000_000_007;
+                    minFlights[edge.to] = Math.min(minFlights[edge.to], minFlights[curNode] + 1);
+                    maxFlights[edge.to] = Math.max(maxFlights[edge.to], maxFlights[curNode] + 1);
+                }
+            }
+        }
+        out.write(String.valueOf(dist[n]) + " ");
+        out.write(String.valueOf(ways[n]) + " ");
+        out.write(String.valueOf(minFlights[n]) + " ");
+        out.write(String.valueOf(maxFlights[n]) + " ");
+        return;
+    }
+
+    public static int find(int node, int[] parent) {
+        while(parent[node] != node) {
+            node = parent[node];
+        }
+        return node;
+    }
+
+    public static int union(int rootA, int rootB, int size[], int parent[]) {
+        if(size[rootA] > size[rootB]) {
+            size[rootA] += size[rootB];
+            parent[rootB] = rootA;
+            return size[rootA];
+        } else {
+            size[rootB] += size[rootA];
+            parent[rootA] = rootB;
+            return size[rootB];
+        }
+    }
+
+    public static void RoadConstruction() throws IOException {
+        int n = sc.nextInt();
+        int m = sc.nextInt();
+        int parent[] = new int[n+1];
+        int size[] = new int[n+1];
+        int components = n;
+        int largest = 1;
+
+        for(int i = 1 ; i <= n ; i++) {
+            parent[i] = i;
+            size[i] = 1;
+        }
+
+        for(int i = 1 ; i <= m ; i++){
+            int a = sc.nextInt();
+            int b = sc.nextInt();
+            int rootA = find(a, parent);
+            int rootB = find(b, parent);
+
+            if(rootA != rootB) {
+                int updated = union(rootA, rootB, size, parent);
+                components--;
+                largest = Math.max(largest, updated);
+            }
+            out.write(String.valueOf(components) + " " + String.valueOf(largest));
+            out.newLine();
+        }
         
+        return;
     }
 
     public static void main(String args[]) throws IOException {
@@ -1226,7 +1369,12 @@ public class GraphAlgorithms {
         // RoundTripII();
         // CourseSchedule();
         // LongestFlightRoute();
-        GameRoutes();
+        // GameRoutes();
+        // Investigation();
+
+
+
+        RoadConstruction();
 
         out.flush();
     }
